@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+*.pyc
+.env
+node_modules/
+backend/data/sample_output/*.csv
+neo4j_data/

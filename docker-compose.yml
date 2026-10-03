@@ -1,0 +1,27 @@
+services:
+  neo4j:
+    image: neo4j:5-community
+    container_name: skein-neo4j
+    environment:
+      - NEO4J_AUTH=neo4j/skein_dev_password
+      - NEO4J_PLUGINS=["graph-data-science"]
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j_data:/data
+      - ./backend/data/sample_output:/var/lib/neo4j/import
+    healthcheck:
+      test: ["CMD", "wget", "-O", "/dev/null", "http://localhost:7474"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7
+    container_name: skein-redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  neo4j_data:
